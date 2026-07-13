@@ -1,5 +1,6 @@
 
-import {IsString,IsNotEmpty,MinLength,MaxLength,IsEmail, IsNumber, Min, Max,IsOptional,IsPhoneNumber} from 'class-validator';
+import {IsString,IsNotEmpty,MinLength,MaxLength,IsEmail, IsNumber, Min, Max,IsOptional,IsPhoneNumber, IsEnum} from 'class-validator';
+import { GenderEnums } from 'src/common/enums/enums.service';
 
 export class CreateUserDto {
   @IsString({ message: 'Name must be a string' })
@@ -25,7 +26,10 @@ export class CreateUserDto {
 
   @IsPhoneNumber('EG', { message: 'Invalid Egyptian phone number' })
   phone: string;
-
+@IsEnum(GenderEnums, {
+  message: 'Gender must be male or female',
+})
+gender: GenderEnums;
   @IsOptional()
   @IsString({ message: 'Address must be a string' })
   @MaxLength(200, { message: 'Address cannot exceed 200 characters' })

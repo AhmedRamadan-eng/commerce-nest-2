@@ -6,6 +6,7 @@ import{customValidationPipe} from "../pipe/viledion.pipe"
 import { error } from 'console';
 import { addUserSchema } from './user/user.viledtion';
 import { CreateUserDto } from './user/user.dto';
+import { LoginDto } from './user/user.dtoliogn';
 
 @Controller("user")
 export class Usercontroller {
@@ -30,23 +31,20 @@ export class Usercontroller {
 
 
 
-
-
-
 @Post('CreateUser')
-CreateUse(
-  @Body(new ValidationPipe()) createUserDto: CreateUserDto,
-) {
+CreateUse(@Body(new ValidationPipe()) createUserDto: CreateUserDto) {
   return this.UserService.CreateUse(createUserDto);
 }
 
 
-
-
-
-
-
-
+  
 
 }
+
+
+
+
+
+
+
 

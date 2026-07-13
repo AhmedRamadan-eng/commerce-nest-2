@@ -1,32 +1,43 @@
 import { Injectable, ConflictException } from '@nestjs/common';
-import { CreateUserDto } from './user.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
-const users = [
-  { id: 1, email: 'ahmed@gmail.com', name: 'Ahmed' },
-  { id: 2, email: 'ali@gmail.com', name: 'Ali' },
-];
+import { CreateUserDto } from './user.dto';
+import { User, UserDocument } from 'src/db/user.db';
 
 @Injectable()
 export class UserService {
-  CreateUse(data: CreateUserDto) {
+  constructor(
+    @InjectModel(User.name)
+    private readonly userModel: Model<UserDocument>,
+  ) {}
+
+  async CreateUse(data: CreateUserDto) {
     const { email } = data;
+  console.log(email);
+    const existsuser = await this.userModel.findOne({ email });
 
-    const user = users.find((user) => user.email === email);
-
-    if (user) {
+    if (existsuser) {
       throw new ConflictException('User already exists');
     }
 
-    const newUser = {
-      id: users.length + 1,
-      ...data,
-    };
+    const user = new this.userModel(data);
 
-    users.push(newUser);
+console.log(user);
+
+await user.save();
 
     return {
       message: 'User added successfully',
-      data: newUser,
+      data: User,
     };
   }
+
+  
+  async findByEmail(email: string) {
+    return await this.userModel.findOne({ email });
+  }
 }
+
+
+
