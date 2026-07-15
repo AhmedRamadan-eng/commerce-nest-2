@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -59,4 +60,10 @@ export class CategoryController {
 
     return this.categoryService.update(dto, logoUrl, id);
   }
+
+  @Delete('delete/:id')
+@UseGuards(JwtAuthGuard)
+async delete(@Param('id') id: string) {
+  return this.categoryService.delete(id);
+}
 }

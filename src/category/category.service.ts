@@ -62,6 +62,17 @@ async findById(id: string) {
   return category;
 }
 
+async delete(id: string) {
+  const deleted = await this.categoryModel.findByIdAndDelete(id);
 
+  if (!deleted) {
+    throw new NotFoundException('User not found');
+  }
+
+  return {
+    message: 'category deleted successfully',
+    data: deleted,
+  };
+}
 
 }

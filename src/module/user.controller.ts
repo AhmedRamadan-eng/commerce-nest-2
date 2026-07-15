@@ -1,12 +1,26 @@
-import { BadRequestException, Body, Controller, Get, ParseEnumPipe, Post, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+  ValidationPipe,
+} from '@nestjs/common';
 
 import { UserService } from './user/user.service';
 
 import{customValidationPipe} from "../pipe/viledion.pipe"
 import { error } from 'console';
 import { addUserSchema } from './user/user.viledtion';
-import { CreateUserDto } from './user/user.dto';
-import { LoginDto } from './user/user.dtoliogn';
+import { CreateUserDto } from '../category/dto/user.dto';
+import { LoginDto } from '../category/dto/user.dtoliogn';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller("user")
 export class Usercontroller {
@@ -37,9 +51,31 @@ CreateUse(@Body(new ValidationPipe()) createUserDto: CreateUserDto) {
 }
 
 
-  
+  @Get('all')
+  async findAll() {
+    return this.UserService.findAll();
+  }
 
+  @Get('byid/:id')
+  async findById(@Param('id') id: string) {
+    return this.UserService.findById(id);
+  }
+ @Patch('update/:id')
+  @UseGuards(JwtAuthGuard)
+  async update(
+    @Param('id') id: string,
+    @Body() dto: CreateUserDto,
+  ) {
+    return this.UserService.update(dto, id);
+  }
+
+  @Delete('delete/:id')
+@UseGuards(JwtAuthGuard)
+async delete(@Param('id') id: string) {
+  return this.UserService.delete(id);
 }
+}
+
 
 
 
