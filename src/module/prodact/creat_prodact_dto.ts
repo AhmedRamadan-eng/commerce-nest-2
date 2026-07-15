@@ -1,5 +1,27 @@
 import {
-  IsArray,IsBoolean,IsNotEmpty,IsNumber,IsOptional,IsPositive,IsString,Max,MaxLength, Min,MinLength,} from 'class-validator';
+  IsArray,
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Max,
+  MaxLength,
+  Min,
+  MinLength,
+  ValidateNested,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+
+export class SizeStockDto {
+  @IsString()
+  @IsNotEmpty()
+  size: string;
+
+  @IsNumber({}, { message: 'Stock must be a number' })
+  @Min(0, { message: 'Stock cannot be negative' })
+  stock: number;
+}
 
 export class createProductDto {
   @IsString()
@@ -14,18 +36,14 @@ export class createProductDto {
   description: string;
 
   @IsNumber({}, { message: 'Price must be a number' })
-@Min(0, { message: 'Price cannot be negative' })
-price: number;
+  @Min(0, { message: 'Price cannot be negative' })
+  price: number;
 
   @IsNumber()
   @Min(0)
   @Max(100)
   @IsOptional()
   discount?: number;
-
-@IsNumber({}, { message: 'Stock must be a number' })
-@Min(0, { message: 'Stock cannot be negative' })
-stock: number;
 
   @IsString()
   @IsNotEmpty()
@@ -35,17 +53,16 @@ stock: number;
   @IsNotEmpty()
   brand: string;
 
-
-
   @IsArray()
   @IsString({ each: true })
   @IsOptional()
   colors?: string[];
 
   @IsArray()
-  @IsString({ each: true })
-  @IsOptional()
-  sizes?: string[];
+  @ValidateNested({ each: true })
+  @Type(() => SizeStockDto)
+  @IsNotEmpty()
+  sizes: SizeStockDto[];
 
   @IsNumber()
   @Min(0)
