@@ -9,7 +9,7 @@ import { Model } from 'mongoose';
 
 import { createProductDto } from './creat_prodact_dto';
 import { UpdateproductDto } from './dto/update-brand.dto';
-import { Product } from 'src/db/models/product.model';
+import { Product } from 'src/db/models/products.model';
 
 @Injectable()
 export class ProductService {
