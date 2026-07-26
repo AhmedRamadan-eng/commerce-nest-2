@@ -83,9 +83,9 @@ export class ProductService {
     return updated;
   }
 
-  async findAll() {
-    return await this.ProductModel.find().populate('createdBy category brand');
-  }
+async findAll() {
+  return await this.ProductModel.find();
+}
 
   async findById(id: string) {
     const product = await this.ProductModel

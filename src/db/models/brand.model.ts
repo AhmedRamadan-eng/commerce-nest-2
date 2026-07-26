@@ -28,7 +28,7 @@ categories: mongoose.Types.ObjectId[];
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Admin',
+ ref: 'User',
     required: true,
   })
   createdBy: mongoose.Types.ObjectId;

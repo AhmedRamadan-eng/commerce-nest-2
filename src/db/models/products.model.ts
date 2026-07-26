@@ -1,7 +1,7 @@
 import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 
-export type HProductDocument = HydratedDocument<Product>;
+export type ProductDocument = HydratedDocument<Product>;
 
 @Schema({ _id: false })
 export class SizeStock {
@@ -66,9 +66,7 @@ export class Product {
   })
   colors: string[];
 
-  @Prop({
-    type: String,
-  })
+  @Prop()
   logo: string;
 
   @Prop({
@@ -80,7 +78,6 @@ export class Product {
   rating: number;
 
   @Prop({
-    type: Boolean,
     default: true,
   })
   isAvailable: boolean;
@@ -101,7 +98,7 @@ export class Product {
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Admin',
+    ref: 'User',
     required: true,
   })
   createdBy: mongoose.Schema.Types.ObjectId;

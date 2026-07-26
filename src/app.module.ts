@@ -10,15 +10,15 @@ import { AuthModule } from './auth/auth.module';
 import { CategoryModule } from './category/category.module';
 import { BrandModule } from './brand/brand.module';
 import { CartModule } from './cart/cart.module';
+import { ReviewModule } from './review/review.module';
 
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath: ['.env.dev'],
-      isGlobal: true,
-    }),
-
+   ConfigModule.forRoot({
+  envFilePath: 'config/.env',
+  isGlobal: true,
+}),
     // MongooseModule.forRoot('mongodb://localhost:27017/Ecomars', {
     //   connectionFactory: (connection: Connection) => {
     //     connection.on('connected', () => console.log('database connected'));
@@ -40,6 +40,8 @@ import { CartModule } from './cart/cart.module';
     BrandModule,
   
     CartModule,
+  
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService],
