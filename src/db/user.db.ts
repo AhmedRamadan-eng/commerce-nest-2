@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 import { retry } from 'rxjs';
 import { defaultEnums, GenderEnums, ProviderEnums } from 'src/common/enums/enums.service';
@@ -78,4 +78,6 @@ UserSchema.pre('save', function () {
 
 
 
-export const userModel = model('user',UserSchema);
+export const userModel = MongooseModule.forFeature([
+  { name: User.name, schema: UserSchema },
+]);
